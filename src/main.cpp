@@ -1,9 +1,6 @@
-#include "cemuhook/cemuhookprotocol.h"
-#include "cemuhook/cemuhookserver.h"
 #include "hiddev/hiddevfinder.h"
 #include "hiddev/hiddevreader.h"
 #include "log/log.h"
-#include "sdgyrodsu/cemuhookadapter.h"
 #include "sdgyrodsu/presenter.h"
 #include "sdgyrodsu/sdhidframe.h"
 #include <csignal>
@@ -14,8 +11,6 @@
 using namespace kmicki::sdgyrodsu;
 using namespace kmicki::hiddev;
 using namespace kmicki::log;
-using namespace kmicki::cemuhook::protocol;
-using namespace kmicki::cemuhook;
 
 const LogLevel cLogLevel =
     LogLevelDebug; // change to Default when configuration is possible
@@ -119,10 +114,6 @@ int main() {
 
   reader.SetStartMarker(
       {0x01, 0x00, 0x09, 0x40}); // Beginning of every Steam Decks' HID frame
-
-  CemuhookAdapter adapter(reader);
-  reader.SetNoGyro(adapter.NoGyro);
-  Server server(adapter);
 
   uint32_t lastInc = 0;
   int stopping = 0;
