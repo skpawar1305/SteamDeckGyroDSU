@@ -1,4 +1,7 @@
 # SteamDeckGyroDSU
+``````
+g++ -std=c++2a $(find inc -type d -printf '-I %p\n') -O3 -g $(find src -type f -iregex '.*\.cpp' -printf '%p\n') -pthread -lncurses -lsystemd -lhidapi-hidraw -o bin/release/sdgyrodsu -I/usr/include
+```
 **DSU** (*cemuhook protocol*) server for motion data for **Steam Deck**.
 
 ## Install/Update
