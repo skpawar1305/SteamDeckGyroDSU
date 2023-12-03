@@ -2,32 +2,27 @@
 #define _KMICKI_SDGYRODSU_GYROVALDETERMINE_H_
 
 #include "sdhidframe.h"
-#include <vector>
 #include <cstdint>
+#include <vector>
 
-namespace kmicki::sdgyrodsu
-{
+namespace kmicki::sdgyrodsu {
 
-    class GyroValDetermine
-    {
-        
+class GyroValDetermine {
 
-        public:
-        GyroValDetermine();
-        void Reset();
-        void ProcessFrame(SdHidFrame const& frame);
-        long GetDegPerSecond() const;
+public:
+  GyroValDetermine();
+  void Reset();
+  void ProcessFrame(SdHidFrame const &frame);
+  long GetDegPerSecond() const;
 
-        private:
+private:
+  int timeStart;
+  int timeLast;
+  int accelStart;
+  int accelLast;
+  std::vector<int16_t> data;
+};
 
-        int timeStart;
-        int timeLast;
-        int accelStart;
-        int accelLast;
-        std::vector<int16_t> data;
-    };
-
-}
-
+} // namespace kmicki::sdgyrodsu
 
 #endif

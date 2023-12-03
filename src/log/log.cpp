@@ -2,43 +2,29 @@
 #include <iostream>
 #include <mutex>
 
-namespace kmicki::log
-{
-    LogLevel currentLogType = LogLevelDefault;
+namespace kmicki::log {
+LogLevel currentLogType = LogLevelDefault;
 
-    void SetLogLevel(LogLevel type)
-    {
-        currentLogType = type;
-    }
-    
-    LogLevel const& GetLogLevel()
-    {
-        return currentLogType;
-    }
+void SetLogLevel(LogLevel type) { currentLogType = type; }
 
-    void Log(std::string message,LogLevel type)
-    {
-        if(type > currentLogType)
-            return;
+LogLevel const &GetLogLevel() { return currentLogType; }
 
-        static std::mutex logMutex;
-        std::lock_guard lock(logMutex);
-        std::cout << message << std::endl;
-    }
+void Log(std::string message, LogLevel type) {
+  if (type > currentLogType)
+    return;
 
-    LogF::LogF(LogLevel type)
-    : std::ostringstream(), logType(type)
-    {};
-
-    LogF::~LogF()
-    {
-        Log(str(),logType);
-    }
-
-    void LogF::LogNow()
-    {
-        Log(str(),logType);
-        std::ostringstream newStream;
-        swap(newStream);
-    }
+  static std::mutex logMutex;
+  std::lock_guard lock(logMutex);
+  std::cout << message << std::endl;
 }
+
+LogF::LogF(LogLevel type) : std::ostringstream(), logType(type){};
+
+LogF::~LogF() { Log(str(), logType); }
+
+void LogF::LogNow() {
+  Log(str(), logType);
+  std::ostringstream newStream;
+  swap(newStream);
+}
+} // namespace kmicki::log

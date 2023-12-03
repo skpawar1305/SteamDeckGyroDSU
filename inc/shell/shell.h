@@ -3,10 +3,9 @@
 
 #include <string>
 
-namespace kmicki::shell
-{
-    // Execute shell command, provide stdout and return code returned by the command
-    int ExecuteCommand(std::string cmd, std::string &stdout);
-}
+namespace kmicki::shell {
+// Execute shell command, provide stdout and return code returned by the command
+int ExecuteCommand(std::string cmd, std::string &stdout);
+} // namespace kmicki::shell
 
 #endif

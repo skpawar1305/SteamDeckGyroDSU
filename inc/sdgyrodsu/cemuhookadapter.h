@@ -1,55 +1,60 @@
 #ifndef _KMICKI_SDGYRODSU_CEMUHOOKADAPTER_H_
 #define _KMICKI_SDGYRODSU_CEMUHOOKADAPTER_H_
 
-#include "sdhidframe.h"
 #include "cemuhook/cemuhookprotocol.h"
 #include "hiddev/hiddevreader.h"
 #include "pipeline/serve.h"
 #include "pipeline/signalout.h"
+#include "sdhidframe.h"
 
-namespace kmicki::sdgyrodsu
-{
-    class CemuhookAdapter
-    {
-        public:
-        CemuhookAdapter() = delete;
+namespace kmicki::sdgyrodsu {
+class CemuhookAdapter {
+public:
+  CemuhookAdapter() = delete;
 
-        CemuhookAdapter(hiddev::HidDevReader & _reader, bool persistent = true);
+  CemuhookAdapter(hiddev::HidDevReader &_reader, bool persistent = true);
 
-        void StartFrameGrab();
+  void StartFrameGrab();
 
-        // Modifies motion data in place.
-        // Returns number if frames to be replicated in next calls (in case of missing frames).
-        // persistent: true when motion structure is not modified between calls.
-        int const& SetMotionDataNewFrame(cemuhook::protocol::MotionData &motion);
-        void StopFrameGrab();
+  // Modifies motion data in place.
+  // Returns number if frames to be replicated in next calls (in case of missing
+  // frames). persistent: true when motion structure is not modified between
+  // calls.
+  int const &SetMotionDataNewFrame(cemuhook::protocol::MotionData &motion);
+  void StopFrameGrab();
 
-        bool IsControllerConnected();
+  bool IsControllerConnected();
 
-        cemuhook::protocol::MotionData GetMotionData(SdHidFrame const& frame, float &lastAccelRtL, float &lastAccelFtB, float &lastAccelTtB);
-        static void SetMotionData(SdHidFrame const& frame, cemuhook::protocol::MotionData &data, float &lastAccelRtL, float &lastAccelFtB, float &lastAccelTtB);
+  cemuhook::protocol::MotionData GetMotionData(SdHidFrame const &frame,
+                                               float &lastAccelRtL,
+                                               float &lastAccelFtB,
+                                               float &lastAccelTtB);
+  static void SetMotionData(SdHidFrame const &frame,
+                            cemuhook::protocol::MotionData &data,
+                            float &lastAccelRtL, float &lastAccelFtB,
+                            float &lastAccelTtB);
 
-        SignalOut NoGyro;
+  SignalOut NoGyro;
 
-        private:
-        bool ignoreFirst;
-        bool isPersistent;
+private:
+  bool ignoreFirst;
+  bool isPersistent;
 
-        cemuhook::protocol::MotionData data;
-        hiddev::HidDevReader & reader;
+  cemuhook::protocol::MotionData data;
+  hiddev::HidDevReader &reader;
 
-        uint32_t lastInc;
-        uint64_t lastTimestamp;
-        
-        float lastAccelRtL;
-        float lastAccelFtB;
-        float lastAccelTtB;
+  uint32_t lastInc;
+  uint64_t lastTimestamp;
 
-        int toReplicate;
-        int noGyroCooldown;
+  float lastAccelRtL;
+  float lastAccelFtB;
+  float lastAccelTtB;
 
-        pipeline::Serve<hiddev::HidDevReader::frame_t> * frameServe;
-    };
-}
+  int toReplicate;
+  int noGyroCooldown;
+
+  pipeline::Serve<hiddev::HidDevReader::frame_t> *frameServe;
+};
+} // namespace kmicki::sdgyrodsu
 
 #endif

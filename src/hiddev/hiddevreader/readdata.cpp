@@ -5,27 +5,19 @@
 
 using namespace kmicki::log;
 
-namespace kmicki::hiddev
-{
-    // Definition - ReadData
-    HidDevReader::ReadData::ReadData(int const& _frameLen)
+namespace kmicki::hiddev {
+// Definition - ReadData
+HidDevReader::ReadData::ReadData(int const &_frameLen)
     : startMarker(0),
-      Data(new std::vector<char>(_frameLen),
-           new std::vector<char>(_frameLen), 
+      Data(new std::vector<char>(_frameLen), new std::vector<char>(_frameLen),
            new std::vector<char>(_frameLen)),
-      Unsynced()
-    { }
+      Unsynced() {}
 
-    HidDevReader::ReadData::~ReadData()
-    {
-        TryStopThenKill();
-    }
+HidDevReader::ReadData::~ReadData() { TryStopThenKill(); }
 
-    void HidDevReader::ReadData::FlushPipes()
-    { }
+void HidDevReader::ReadData::FlushPipes() {}
 
-    void HidDevReader::ReadData::SetStartMarker(std::vector<char> const& marker)
-    {
-        startMarker = marker;
-    }
+void HidDevReader::ReadData::SetStartMarker(std::vector<char> const &marker) {
+  startMarker = marker;
 }
+} // namespace kmicki::hiddev

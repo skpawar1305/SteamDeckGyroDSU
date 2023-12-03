@@ -3,10 +3,9 @@
 
 #include <cstdint>
 
-namespace kmicki::hiddev
-{
-    // find which X among /dev/usb/hiddevX fits provided VID+PID
-    int FindHidDevNo(uint16_t vid, uint16_t pid);
-}
+namespace kmicki::hiddev {
+// find which X among /dev/usb/hiddevX fits provided VID+PID
+int FindHidDevNo(uint16_t vid, uint16_t pid);
+} // namespace kmicki::hiddev
 
 #endif
