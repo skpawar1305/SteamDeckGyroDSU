@@ -93,7 +93,7 @@ int main() {
   std::unique_ptr<HidDevReader> readerPtr;
 
   if (cUseHiddevFile) {
-    int hidno = FindHidDevNo(cVID, cPID);
+    int hidno = 0;
     if (hidno < 0) {
       Log("Steam Deck Controls' HID device not found.");
       return 0;
